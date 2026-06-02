@@ -1765,15 +1765,15 @@
         // Mencari NISN (Anggap NISN ada di Kolom A / Kolom ke-0)
         for (let row of rows) {
             // Pastikan baris tidak kosong sebelum mengecek
-            if (row && row.c && row.c[0] && String(row.c[0].v).trim() === nisn) {
+            if (row && row.c && row.c[1] && String(row.c[1].v).trim() === nisn) {
                 siswaFound = {
-                    nisn: row.c[0] ? String(row.c[0].v) : '',
-                    sandi: (row.c[1] && row.c[1].v != null) ? String(row.c[1].v) : '',
-                    nama: (row.c[2] && row.c[2].v != null) ? String(row.c[2].v) : '-',
-                    jenjang: (row.c[3] && row.c[3].v != null) ? String(row.c[3].v) : '-',
-                    status: (row.c[4] && row.c[4].v != null) ? String(row.c[4].v) : '-',
-                    catatan: (row.c[5] && row.c[5].v != null) ? String(row.c[5].v) : '-',
-                    link_sk: (row.c[6] && row.c[6].v != null) ? String(row.c[6].v) : '#'
+                    nisn: row.c[1] ? String(row.c[1].v) : '',
+                    sandi: (row.c[2] && row.c[1].v != null) ? String(row.c[2].v) : '',
+                    nama: (row.c[3] && row.c[2].v != null) ? String(row.c[3].v) : '-',
+                    jenjang: (row.c[4] && row.c[3].v != null) ? String(row.c[4].v) : '-',
+                    status: (row.c[5] && row.c[4].v != null) ? String(row.c[5].v) : '-',
+                    catatan: (row.c[6] && row.c[5].v != null) ? String(row.c[6].v) : '-',
+                    link_sk: (row.c[7] && row.c[6].v != null) ? String(row.c[7].v) : '#'
                 };
                 break;
             }
