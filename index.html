@@ -659,15 +659,15 @@
             initActiveLinkHighlight();
         });
 
-        /* ========== LOGIC: VERIFIKASI NIS & TEMPLATE OUTPUT ========== */
+        /* ========== LOGIC: VERIFIKASI NISN & TEMPLATE OUTPUT ========== */
         function prosesCekKelulusan(event) {
             event.preventDefault();
-            const inputNIS = document.getElementById('nisInput').value.trim();
+            const inputNIS = document.getElementById('nisnInput').value.trim();
             const hasilBox = document.getElementById('hasilKelulusanBox');
             
-            // Evaluasi keberadaan NIS di dalam object database
-            if (databaseKelulusan.hasOwnProperty(inputNIS)) {
-                const siswa = databaseKelulusan[inputNIS];
+            // Evaluasi keberadaan NISN di dalam object database
+            if (databaseKelulusan.hasOwnProperty(inputNISN)) {
+                const siswa = databaseKelulusan[inputNISN];
                 let statusBadge = '';
                 
                 if (siswa.status.toUpperCase() === 'LULUS') {
@@ -680,7 +680,7 @@
                     <div style="background: white; color: var(--teks-gelap); padding: 35px 30px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); animation: fadeIn 0.4s ease-out; text-align: left; width: 100%;">
                         ${statusBadge}
                         <h3 style="font-size: 26px; font-weight: 800; color: var(--hijau-utama); margin-bottom: 5px; line-height:1.2;">${siswa.nama}</h3>
-                        <p style="color: #666; font-size: 14px; margin-bottom: 20px; font-weight: 500;">NIS: ${inputNIS} • ${siswa.sekolah}</p>
+                        <p style="color: #666; font-size: 14px; margin-bottom: 20px; font-weight: 500;">NIS: ${inputNISN} • ${siswa.sekolah}</p>
                         <hr style="border: none; border-top: 1px dashed #e2e8f0; margin-bottom: 20px;">
                         
                         <p style="font-size: 14px; color: #4a5568; margin-bottom: 25px; line-height: 1.6;">
