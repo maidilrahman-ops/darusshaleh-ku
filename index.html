@@ -1718,66 +1718,79 @@ async function handleCekKelulusan(event) {
     const sandi = document.getElementById('inputSandi').value.trim();
     const boxHasil = document.getElementById('boxHasilCek');
     
-    // 1. Validasi awal format input siswa
-    if(nisn.length < 10 || isNaN(nisn)) {
-        boxHasil.style.display = "block";
-        boxHasil.className = "hasil-kelulusan-box status-gagal";
-        boxHasil.innerHTML = `<h4><i class="fas fa-exclamation-triangle"></i> Format Gagal</h4><p style="text-align:center;">Format NISN harus berupa 10 digit angka resmi!</p>`;
-        return;
-    }
-
-    // 2. Beri efek loading (Seolah-olah sedang mencari ke server kepala sekolah)
+    // Tampilkan animasi loading
     boxHasil.style.display = "block";
     boxHasil.className = "hasil-kelulusan-box";
-    boxHasil.style.background = "rgba(255,255,255,0.1)";
     boxHasil.innerHTML = `
         <div style="text-align:center; padding: 20px;">
             <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: var(--kuning-emas); margin-bottom: 10px;"></i>
-            <p>Memeriksa basis data rahasia di server sekolah...</p>
+            <p>Memeriksa data ke Server Google Sekolah...</p>
         </div>
     `;
 
-    // Kita buat jeda waktu 1.5 detik agar terasa nyata proses pencariannya
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // GANTI KODE DI BAWAH INI DENGAN ID GOOGLE SHEETS KAKAK YANG ASLI
+    const SPREADSHEET_ID = 'https://docs.google.com/spreadsheets/d/19glSrjAgVX7s1rkvTLBXDpBKQ921XL7kRuUcgCmkWT8/edit?usp=sharing';
+    const SHEET_NAME = 'Sheet1'; // Sesuaikan dengan nama sheet di bawah, biasanya Sheet1
+    
+    // Alamat untuk mengambil data Excel dalam bentuk format kode teks (JSON)
+    const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
 
-    // 3. Simulasi Respon dari Server Aman (Di dunia nyata, bagian ini diambil via Fetch API ke Database MySQL)
-    // Di sini kita membuat simulasi database mini yang "seolah-olah" diproses di server backend.
-    const serverMockDatabase = {
-        "0123456789": { nama: "Muhammad Alfatih", jenjang: "SMA IT Darusshaleh (Angkatan 1)", status: "LULUS", sandi: "drs123", ket: "Diterima di Universitas Andalas via jalur prestasi.", link: "https://drive.google.com/file/d/1SKgfUrk5uCXUeCWYxoftegAgr6lYR3Fh/view" },
-        "9876543210": { nama: "Siti Aminah", jenjang: "SMP Plus Darusshaleh", status: "LULUS", sandi: "smp456", ket: "Lulus Tahfidz dengan predikat Mumtaz (6 Juz).", link: "#" }
-    };
+    try {
+        const response = await fetch(url);
+        const text = await response.text();
+        
+        // Bersihkan data mentah dari Google agar bisa dibaca komputer
+        const jsonData = JSON.parse(text.substr(47).slice(0, -2));
+        const rows = jsonData.table.rows;
 
-    const dataSiswa = serverMockDatabase[nisn];
+        let siswaDitemukan = null;
 
-    // 4. Tampilkan hasil berdasarkan verifikasi server
-    if (dataSiswa) {
-        if (dataSiswa.sandi === sandi) {
-            boxHasil.className = "hasil-kelulusan-box status-lulus";
-            boxHasil.innerHTML = `
-                <h4><i class="fas fa-graduation-cap"></i> Selamat! Anda Dinyatakan ${dataSiswa.status}</h4>
-                <table class="hasil-table">
-                    <tr><td>Nama Siswa</td><td>: ${dataSiswa.nama}</td></tr>
-                    <tr><td>NISN</td><td>: ${nisn}</td></tr>
-                    <tr><td>Jenjang Sekolah</td><td>: ${dataSiswa.jenjang}</td></tr>
-                    <tr><td>Catatan Khusus</td><td>: <em>${dataSiswa.ket}</em></td></tr>
-                </table>
-                <div style="text-align:center; margin-top:20px;">
-                    <a href="${dataSiswa.link}" target="_blank" style="background:var(--kuning-emas); color:black; font-weight:700; padding:10px 25px; border-radius:30px; text-decoration:none; display:inline-block; font-size:14px;"><i class="fas fa-file-download"></i> Unduh SK Kelulusan Pribadi</a>
-                </div>
-            `;
+        // Mencari baris Excel yang NISN-nya cocok dengan ketikan murid
+        for (let row of rows) {
+            if (row.c[0] && String(row.c[0].v) === nisn) {
+                siswaDitemukan = {
+                    nisn: row.c[0] ? row.c[0].v : '',
+                    sandi: row.c[1] ? row.c[1].v : '',
+                    nama: row.c[2] ? row.c[2].v : '',
+                    jenjang: row.c[3] ? row.c[3].v : '',
+                    status: row.c[4] ? row.c[4].v : '',
+                    catatan: row.c[5] ? row.c[5].v : '',
+                    link_sk: row.c[6] ? row.c[6].v : '#'
+                };
+                break;
+            }
+        }
+
+        if (siswaDitemukan) {
+            // Jika NISN ada, periksa apakah kata sandinya benar
+            if (String(siswaDitemukan.sandi) === sandi) {
+                boxHasil.className = "hasil-kelulusan-box status-lulus";
+                boxHasil.innerHTML = `
+                    <h4><i class="fas fa-graduation-cap"></i> Selamat! Anda Dinyatakan ${siswaDitemukan.status}</h4>
+                    <table class="hasil-table">
+                        <tr><td>Nama Siswa</td><td>: ${siswaDitemukan.nama}</td></tr>
+                        <tr><td>NISN</td><td>: ${nisn}</td></tr>
+                        <tr><td>Jenjang Sekolah</td><td>: ${siswaDitemukan.jenjang}</td></tr>
+                        <tr><td>Catatan Khusus</td><td>: <em>${siswaDitemukan.catatan}</em></td></tr>
+                    </table>
+                    <div style="text-align:center; margin-top:20px;">
+                        <a href="${siswaDitemukan.link_sk}" target="_blank" style="background:var(--kuning-emas); color:black; font-weight:700; padding:10px 25px; border-radius:30px; text-decoration:none; display:inline-block;"><i class="fas fa-file-download"></i> Unduh SK Kelulusan</a>
+                    </div>
+                `;
+            } else {
+                boxHasil.className = "hasil-kelulusan-box status-gagal";
+                boxHasil.innerHTML = `<h4><i class="fas fa-lock"></i> Akses Ditolak</h4><p style="text-align:center;">Sandi Kelulusan Salah!</p>`;
+            }
         } else {
             boxHasil.className = "hasil-kelulusan-box status-gagal";
-            boxHasil.innerHTML = `
-                <h4><i class="fas fa-lock"></i> Akses Ditolak</h4>
-                <p style="text-align:center;">Sandi Kelulusan yang Anda masukkan salah. Silakan periksa kembali berkas/PIN yang diberikan panitia.</p>
-            `;
+            boxHasil.innerHTML = `<h4><i class="fas fa-user-times"></i> Tidak Ditemukan</h4><p style="text-align:center;">Nomor NISN tidak terdaftar.</p>`;
         }
-    } else {
+
+    } catch (error) {
         boxHasil.className = "hasil-kelulusan-box status-gagal";
-        boxHasil.innerHTML = `
-            <h4><i class="fas fa-user-times"></i> Data Tidak Ditemukan</h4>
-            <p style="text-align:center;">Siswa dengan NISN <strong>${nisn}</strong> tidak terdaftar dalam basis data kelulusan tahun ini. Silakan hubungi bagian Tata Usaha.</p>
-        `;
+        boxHasil.innerHTML = `<h4><i class="fas fa-exclamation-triangle"></i> Gagal</h4><p style="text-align:center;">Gagal mengambil data sistem.</p>`;
+    }
+}
     }
 }
     </script>
