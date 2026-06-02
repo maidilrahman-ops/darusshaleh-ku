@@ -1393,7 +1393,25 @@
                     <a href="#kesan" class="btn-kelulusan">💬 Tulis Pesan & Kesan</a>
                 </div>
             </div>
+```html
+<div class="cek-mandiri-box" style="margin-top: 40px; background: rgba(255, 255, 255, 0.1); padding: 25px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2);">
+    <h4 style="color: var(--kuning-emas); margin-bottom: 15px;"><i class="fas fa-search"></i> Cek Status Kelulusan Mandiri</h4>
+    <form onsubmit="handleCekKelulusan(event)">
+        <div style="margin-bottom: 15px; text-align: left;">
+            <label style="display: block; font-size: 13px; margin-bottom: 5px;">Nomor NISN Siswa:</label>
+            <input type="text" id="inputNISN" placeholder="Masukkan 10 digit NISN" required style="width: 100%; padding: 10px 15px; border-radius: 25px; border: none; outline: none; color: #333;">
+        </div>
+        <div style="margin-bottom: 20px; text-align: left;">
+            <label style="display: block; font-size: 13px; margin-bottom: 5px;">Sandi / PIN Kelulusan:</label>
+            <input type="password" id="inputSandi" placeholder="Masukkan Sandi Rahasia" required style="width: 100%; padding: 10px 15px; border-radius: 25px; border: none; outline: none; color: #333;">
+        </div>
+        <button type="submit" style="background: var(--kuning-emas); color: black; border: none; padding: 12px 30px; border-radius: 30px; font-weight: 700; cursor: pointer; width: 100%; transition: 0.3s;">
+            <i class="fas fa-key"></i> Periksa Status Kelulusan
+        </button>
+    </form>
 
+    <div id="boxHasilCek" class="hasil-kelulusan-box" style="display: none; margin-top: 20px; padding: 15px; border-radius: 10px; text-align: left;"></div>
+</div>
             <div class="cek-mandiri-container" data-aos="fade-up">
                 <h4>🔍 Cek Status Kelulusan Siswa Secara Mandiri</h4>
                 <p style="text-align: center; font-size: 14px; color: rgba(255,255,255,0.8);">Silakan masukkan NISN resmi beserta Sandi/PIN pengumuman yang diberikan sekolah.</p>
@@ -1789,6 +1807,97 @@ async function handleCekKelulusan(event) {
     } catch (error) {
         boxHasil.className = "hasil-kelulusan-box status-gagal";
         boxHasil.innerHTML = `<h4><i class="fas fa-exclamation-triangle"></i> Gagal</h4><p style="text-align:center;">Gagal mengambil data sistem.</p>`;
+    }
+}
+// ===== FUNGSI AMAN: MEMBACA DATA LANGSUNG DARI GOOGLE SHEETS =====
+async function handleCekKelulusan(event) {
+    event.preventDefault(); // Menahan agar halaman tidak ke-refresh
+    
+    const nisn = document.getElementById('inputNISN').value.trim();
+    const sandi = document.getElementById('inputSandi').value.trim();
+    const boxHasil = document.getElementById('boxHasilCek');
+    
+    // 1. Tampilkan animasi loading berputar
+    boxHasil.style.display = "block";
+    boxHasil.style.background = "rgba(255,255,255,0.15)";
+    boxHasil.style.color = "white";
+    boxHasil.innerHTML = `
+        <div style="text-align:center; padding: 10px;">
+            <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: var(--kuning-emas); margin-bottom: 10px;"></i>
+            <p>Menghubungkan ke basis data Google Sekolah...</p>
+        </div>
+    `;
+
+    // 2. MASUKKAN ID GOOGLE SHEETS KAKAK DI SINI
+    // Contoh ID: 1SKgfUrk5uCXUeCWYxoftegAgr6lYR3Fh (diambil dari URL Google Sheets Anda)
+    const SPREADSHEET_ID = 'MASUKKAN_ID_GOOGLE_SHEETS_KABUR_KAKAK_DISINI';
+    const SHEET_NAME = 'Sheet1'; // Ganti jika nama lembar di Google Sheets bukan Sheet1
+    
+    const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
+
+    try {
+        const response = await fetch(url);
+        const text = await response.text();
+        
+        // Memotong pembungkus teks bawaan Google agar tersisa data tabel murni murni
+        const jsonData = JSON.parse(text.substr(47).slice(0, -2));
+        const rows = jsonData.table.rows;
+
+        let siswaFound = null;
+
+        // Mencari baris Excel yang nomor NISN-nya (Kolom A) sama dengan input siswa
+        for (let row of rows) {
+            if (row.c[0] && String(row.c[0].v).trim() === nisn) {
+                siswaFound = {
+                    nisn: row.c[0] ? String(row.c[0].v) : '',
+                    sandi: row.c[1] ? String(row.c[1].v) : '',
+                    nama: row.c[2] ? row.c[2].v : '',
+                    jenjang: row.c[3] ? row.c[3].v : '',
+                    status: row.c[4] ? row.c[4].v : '',
+                    catatan: row.c[5] ? row.c[5].v : '',
+                    link_sk: row.c[6] ? row.c[6].v : '#'
+                };
+                break;
+            }
+        }
+
+        // 3. Menampilkan Hasil Pemeriksaan
+        if (siswaFound) {
+            // Jika kata sandi (Kolom B) cocok
+            if (String(siswaFound.sandi).trim() === sandi) {
+                boxHasil.style.background = "#d4edda";
+                boxHasil.style.color = "#155724";
+                boxHasil.style.border = "1px solid #c3e6cb";
+                boxHasil.innerHTML = `
+                    <h4 style="margin-bottom:10px;"><i class="fas fa-graduation-cap"></i> Selamat! Anda Dinyatakan ${siswaFound.status}</h4>
+                    <p style="margin: 3px 0;"><b>Nama:</b> ${siswaFound.nama}</p>
+                    <p style="margin: 3px 0;"><b>NISN:</b> ${nisn}</p>
+                    <p style="margin: 3px 0;"><b>Sekolah:</b> ${siswaFound.jenjang}</p>
+                    <p style="margin: 5px 0; font-size:13px; color:#555;"><i>Catatan: ${siswaFound.catatan}</i></p>
+                    <div style="text-align:center; margin-top:15px;">
+                        <a href="${siswaFound.link_sk}" target="_blank" style="background:#28a745; color:white; padding:8px 20px; border-radius:20px; text-decoration:none; font-weight:bold; display:inline-block; font-size:13px;"><i class="fas fa-download"></i> Unduh SK Kelulusan</a>
+                    </div>
+                `;
+            } else {
+                // Jika NISN ketemu tapi sandi di kolom B salah
+                boxHasil.style.background = "#f8d7da";
+                boxHasil.style.color = "#721c24";
+                boxHasil.style.border = "1px solid #f5c6cb";
+                boxHasil.innerHTML = `<h4><i class="fas fa-lock"></i> Sandi Salah!</h4><p style="font-size:13px;">Sandi/PIN yang Anda masukkan untuk NISN ${nisn} tidak sesuai.</p>`;
+            }
+        } else {
+            // Jika nomor NISN tidak ada sama sekali di kolom A
+            boxHasil.style.background = "#fff3cd";
+            boxHasil.style.color = "#856404";
+            boxHasil.style.border = "1px solid #ffeeba";
+            boxHasil.innerHTML = `<h4><i class="fas fa-user-times"></i> Data Tidak Ditemukan</h4><p style="font-size:13px;">Nomor NISN <b>${nisn}</b> tidak terdaftar di sistem pengumuman.</p>`;
+        }
+
+    } catch (error) {
+        // Jika internet terputus atau ID spreadsheet salah dimasukkan
+        boxHasil.style.background = "#f8d7da";
+        boxHasil.style.color = "#721c24";
+        boxHasil.innerHTML = `<h4><i class="fas fa-wifi"></i> Gagal Memuat</h4><p style="font-size:12px;">Sistem gagal membaca pangkalan data. Pastikan pengaturan share Google Sheets Anda sudah diatur ke 'Anyone with the link' sebagai Viewer.</p>`;
     }
 }
     </script>
