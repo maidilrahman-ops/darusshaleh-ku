@@ -1220,7 +1220,7 @@
                         <div class="count-item"><span class="count-number" id="sma-seconds">00</span><span class="count-label">Detik</span></div>
                     </div>
                 </div>
-                <div class="countdown-box">
+                <div class="countdown-box" id="smp-countdown-box">
                     <h4>🎓 Pengumuman Kelulusan SMP Plus</h4>
                     <div class="countdown-timer" id="countdown-smp">
                         <div class="count-item"><span class="count-number" id="smp-days">00</span><span class="count-label">Hari</span></div>
@@ -1575,8 +1575,9 @@
 
         // ===== DUA COUNTDOWN =====
         const smaTarget = new Date("May 4, 2026 23:00:00").getTime();
-        const smpTarget = new Date("June 2, 2026 23:00:00").getTime();
+        const smpTarget = new Date("June 2, 2026 21:00:00").getTime(); // Set jam 21.00 hari ini
         let smaRevealed = false;
+        let smpRevealed = false;
 
         function updateCountdownSMA() {
             const now = new Date().getTime();
@@ -1621,14 +1622,25 @@
         function updateCountdownSMP() {
             const now = new Date().getTime();
             const distance = smpTarget - now;
+            const smpBox = document.getElementById('smp-countdown-box');
 
-            if (distance < 0) {
-                document.getElementById('smp-days').textContent = "00";
-                document.getElementById('smp-hours').textContent = "00";
-                document.getElementById('smp-minutes').textContent = "00";
-                document.getElementById('smp-seconds').textContent = "00";
+            if (distance < 0 && !smpRevealed) {
+                smpBox.innerHTML = `
+                    <div style="text-align:center; padding:5px;">
+                        <h4 style="color: var(--kuning-muda); margin-bottom:10px; font-size: 1.1em;">
+                            🎉 Kelulusan SMP Plus Telah Diumumkan!
+                        </h4>
+                        <p style="color: white; font-size: 13px; margin-bottom: 15px;">Silakan klik tombol di bawah ini untuk melihat hasil kelulusan resmi:</p>
+                        <div style="text-align: center;">
+                            <a href="https://s.id/kuDRS2026" target="_blank" style="background:var(--kuning-emas); color:black; padding:8px 20px; border-radius:30px; font-weight:700; text-decoration:none; font-size:14px; display:inline-block; box-shadow: 0 4px 15px rgba(229,161,0,0.4);"><i class="fas fa-external-link-alt"></i> Lihat Kelulusan SMP</a>
+                        </div>
+                    </div>
+                `;
+                smpRevealed = true;
                 return;
             }
+
+            if (smpRevealed) return;
 
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -1674,7 +1686,6 @@
         // ==============================================================
         // ===== DATABASE LOKAL & LOGIKA CEK KELULUSAN MANDIRI SISWA =====
         // ==============================================================
-        // Catatan Admin: Anda dapat menambah, mengubah, atau menghapus data siswa di bawah ini sesuai kebutuhan nyata.
         const databaseKelulusan = {
             "0123456789": {
                 nama: "Muhammad Alfatih",
@@ -1701,7 +1712,6 @@
             const sandi = document.getElementById('inputSandi').value.trim();
             const boxHasil = document.getElementById('boxHasilCek');
             
-            // Validasi Input Dasar
             if(nisn.length < 10 || isNaN(nisn)) {
                 boxHasil.style.display = "block";
                 boxHasil.className = "hasil-kelulusan-box status-gagal";
@@ -1710,11 +1720,9 @@
             }
 
             const dataSiswa = databaseKelulusan[nisn];
-
             boxHasil.style.display = "block";
 
             if (dataSiswa) {
-                // Konfirmasi Sandi Valid
                 if (dataSiswa.sandi === sandi) {
                     boxHasil.className = "hasil-kelulusan-box status-lulus";
                     boxHasil.innerHTML = `
@@ -1730,7 +1738,6 @@
                         </div>
                     `;
                 } else {
-                    // Jika Sandi Salah
                     boxHasil.className = "hasil-kelulusan-box status-gagal";
                     boxHasil.innerHTML = `
                         <h4><i class="fas fa-lock"></i> Akses Ditolak</h4>
@@ -1738,7 +1745,6 @@
                     `;
                 }
             } else {
-                // Jika NISN Tidak Terdaftar
                 boxHasil.className = "hasil-kelulusan-box status-gagal";
                 boxHasil.innerHTML = `
                     <h4><i class="fas fa-user-times"></i> Data Tidak Ditemukan</h4>
