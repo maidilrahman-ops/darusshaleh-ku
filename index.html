@@ -1723,101 +1723,14 @@
             }
         };
 
-       // ==============================================================
-// ===== LOGIKA BARU: CEK KELULUSAN MANDIRI AMAN (SIMULASI SERVER) =====
-// ==============================================================
-
-// Catatan: Kunci rahasia sudah dipindah ke server aman. Browser tidak tahu apa-apa lagi!
-
-async function handleCekKelulusan(event) {
-    event.preventDefault();
+       async function handleCekKelulusan(event) {
+    event.preventDefault(); 
     
     const nisn = document.getElementById('inputNISN').value.trim();
     const sandi = document.getElementById('inputSandi').value.trim();
     const boxHasil = document.getElementById('boxHasilCek');
     
     // Tampilkan animasi loading
-    boxHasil.style.display = "block";
-    boxHasil.className = "hasil-kelulusan-box";
-    boxHasil.innerHTML = `
-        <div style="text-align:center; padding: 20px;">
-            <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: var(--kuning-emas); margin-bottom: 10px;"></i>
-            <p>Memeriksa data ke Server Google Sekolah...</p>
-        </div>
-    `;
-
-    // GANTI KODE DI BAWAH INI DENGAN ID GOOGLE SHEETS KAKAK YANG ASLI
-    const SPREADSHEET_ID = 'https://docs.google.com/spreadsheets/d/19glSrjAgVX7s1rkvTLBXDpBKQ921XL7kRuUcgCmkWT8/edit?usp=sharing';
-    const SHEET_NAME = 'Sheet1'; // Sesuaikan dengan nama sheet di bawah, biasanya Sheet1
-    
-    // Alamat untuk mengambil data Excel dalam bentuk format kode teks (JSON)
-    const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
-
-    try {
-        const response = await fetch(url);
-        const text = await response.text();
-        
-        // Bersihkan data mentah dari Google agar bisa dibaca komputer
-        const jsonData = JSON.parse(text.substr(47).slice(0, -2));
-        const rows = jsonData.table.rows;
-
-        let siswaDitemukan = null;
-
-        // Mencari baris Excel yang NISN-nya cocok dengan ketikan murid
-        for (let row of rows) {
-            if (row.c[0] && String(row.c[0].v) === nisn) {
-                siswaDitemukan = {
-                    nisn: row.c[0] ? row.c[0].v : '',
-                    sandi: row.c[1] ? row.c[1].v : '',
-                    nama: row.c[2] ? row.c[2].v : '',
-                    jenjang: row.c[3] ? row.c[3].v : '',
-                    status: row.c[4] ? row.c[4].v : '',
-                    catatan: row.c[5] ? row.c[5].v : '',
-                    link_sk: row.c[6] ? row.c[6].v : '#'
-                };
-                break;
-            }
-        }
-
-        if (siswaDitemukan) {
-            // Jika NISN ada, periksa apakah kata sandinya benar
-            if (String(siswaDitemukan.sandi) === sandi) {
-                boxHasil.className = "hasil-kelulusan-box status-lulus";
-                boxHasil.innerHTML = `
-                    <h4><i class="fas fa-graduation-cap"></i> Selamat! Anda Dinyatakan ${siswaDitemukan.status}</h4>
-                    <table class="hasil-table">
-                        <tr><td>Nama Siswa</td><td>: ${siswaDitemukan.nama}</td></tr>
-                        <tr><td>NISN</td><td>: ${nisn}</td></tr>
-                        <tr><td>Jenjang Sekolah</td><td>: ${siswaDitemukan.jenjang}</td></tr>
-                        <tr><td>Catatan Khusus</td><td>: <em>${siswaDitemukan.catatan}</em></td></tr>
-                    </table>
-                    <div style="text-align:center; margin-top:20px;">
-                        <a href="${siswaDitemukan.link_sk}" target="_blank" style="background:var(--kuning-emas); color:black; font-weight:700; padding:10px 25px; border-radius:30px; text-decoration:none; display:inline-block;"><i class="fas fa-file-download"></i> Unduh SK Kelulusan</a>
-                    </div>
-                `;
-            } else {
-                boxHasil.className = "hasil-kelulusan-box status-gagal";
-                boxHasil.innerHTML = `<h4><i class="fas fa-lock"></i> Akses Ditolak</h4><p style="text-align:center;">Sandi Kelulusan Salah!</p>`;
-            }
-        } else {
-            boxHasil.className = "hasil-kelulusan-box status-gagal";
-            boxHasil.innerHTML = `<h4><i class="fas fa-user-times"></i> Tidak Ditemukan</h4><p style="text-align:center;">Nomor NISN tidak terdaftar.</p>`;
-        }
-
-    } catch (error) {
-        boxHasil.className = "hasil-kelulusan-box status-gagal";
-        boxHasil.innerHTML = `<h4><i class="fas fa-exclamation-triangle"></i> Gagal</h4><p style="text-align:center;">Gagal mengambil data sistem.</p>`;
-    }
-}
-// ===== FUNGSI AMAN: MEMBACA DATA LANGSUNG DARI GOOGLE SHEETS =====
-async function handleCekKelulusan(event) {
-    event.preventDefault(); // Menahan agar halaman tidak ke-refresh
-    
-    const nisn = document.getElementById('inputNISN').value.trim();
-    const sandi = document.getElementById('inputSandi').value.trim();
-    const boxHasil = document.getElementById('boxHasilCek');
-    
-    // 1. Tampilkan animasi loading berputar
     boxHasil.style.display = "block";
     boxHasil.style.background = "rgba(255,255,255,0.15)";
     boxHasil.style.color = "white";
@@ -1828,42 +1741,46 @@ async function handleCekKelulusan(event) {
         </div>
     `;
 
-    // 2. MASUKKAN ID GOOGLE SHEETS KAKAK DI SINI
-    // Contoh ID: 1SKgfUrk5uCXUeCWYxoftegAgr6lYR3Fh (diambil dari URL Google Sheets Anda)
-    const SPREADSHEET_ID = 'MASUKKAN_ID_GOOGLE_SHEETS_KABUR_KAKAK_DISINI';
-    const SHEET_NAME = 'Sheet1'; // Ganti jika nama lembar di Google Sheets bukan Sheet1
+    // 🔴 PASTIKAN 2 BARIS INI BENAR 🔴
+    const SPREADSHEET_ID = 'MASUKKAN_ID_GOOGLE_SHEETS_KAKAK_DISINI'; 
+    const SHEET_NAME = 'Sheet1'; // Ganti jadi 'Lembar 1' jika Google Sheets Kakak pakai bahasa Indonesia
     
     const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
 
     try {
         const response = await fetch(url);
+        if (!response.ok) throw new Error("Jaringan gagal terhubung ke Google.");
+        
         const text = await response.text();
         
-        // Memotong pembungkus teks bawaan Google agar tersisa data tabel murni murni
-        const jsonData = JSON.parse(text.substr(47).slice(0, -2));
+        // ✨ PERBAIKAN DI SINI: Mesin pencari data yang lebih pintar (Anti-Gagal Parse) ✨
+        const match = text.match(/google\.visualization\.Query\.setResponse\(([\s\S\w]+)\)/);
+        if (!match) throw new Error("Format data dari Google berubah atau Sheet tidak ditemukan.");
+        
+        const jsonData = JSON.parse(match[1]);
         const rows = jsonData.table.rows;
 
         let siswaFound = null;
 
-        // Mencari baris Excel yang nomor NISN-nya (Kolom A) sama dengan input siswa
+        // Mencari NISN (Anggap NISN ada di Kolom A / Kolom ke-0)
         for (let row of rows) {
-            if (row.c[0] && String(row.c[0].v).trim() === nisn) {
+            // Pastikan baris tidak kosong sebelum mengecek
+            if (row && row.c && row.c[0] && String(row.c[0].v).trim() === nisn) {
                 siswaFound = {
                     nisn: row.c[0] ? String(row.c[0].v) : '',
-                    sandi: row.c[1] ? String(row.c[1].v) : '',
-                    nama: row.c[2] ? row.c[2].v : '',
-                    jenjang: row.c[3] ? row.c[3].v : '',
-                    status: row.c[4] ? row.c[4].v : '',
-                    catatan: row.c[5] ? row.c[5].v : '',
-                    link_sk: row.c[6] ? row.c[6].v : '#'
+                    sandi: (row.c[1] && row.c[1].v != null) ? String(row.c[1].v) : '',
+                    nama: (row.c[2] && row.c[2].v != null) ? String(row.c[2].v) : '-',
+                    jenjang: (row.c[3] && row.c[3].v != null) ? String(row.c[3].v) : '-',
+                    status: (row.c[4] && row.c[4].v != null) ? String(row.c[4].v) : '-',
+                    catatan: (row.c[5] && row.c[5].v != null) ? String(row.c[5].v) : '-',
+                    link_sk: (row.c[6] && row.c[6].v != null) ? String(row.c[6].v) : '#'
                 };
                 break;
             }
         }
 
-        // 3. Menampilkan Hasil Pemeriksaan
+        // Tampilkan Hasil
         if (siswaFound) {
-            // Jika kata sandi (Kolom B) cocok
             if (String(siswaFound.sandi).trim() === sandi) {
                 boxHasil.style.background = "#d4edda";
                 boxHasil.style.color = "#155724";
@@ -1879,14 +1796,12 @@ async function handleCekKelulusan(event) {
                     </div>
                 `;
             } else {
-                // Jika NISN ketemu tapi sandi di kolom B salah
                 boxHasil.style.background = "#f8d7da";
                 boxHasil.style.color = "#721c24";
                 boxHasil.style.border = "1px solid #f5c6cb";
                 boxHasil.innerHTML = `<h4><i class="fas fa-lock"></i> Sandi Salah!</h4><p style="font-size:13px;">Sandi/PIN yang Anda masukkan untuk NISN ${nisn} tidak sesuai.</p>`;
             }
         } else {
-            // Jika nomor NISN tidak ada sama sekali di kolom A
             boxHasil.style.background = "#fff3cd";
             boxHasil.style.color = "#856404";
             boxHasil.style.border = "1px solid #ffeeba";
@@ -1894,10 +1809,10 @@ async function handleCekKelulusan(event) {
         }
 
     } catch (error) {
-        // Jika internet terputus atau ID spreadsheet salah dimasukkan
+        console.error(error); // Untuk mengecek error asli di Inspect Element > Console
         boxHasil.style.background = "#f8d7da";
         boxHasil.style.color = "#721c24";
-        boxHasil.innerHTML = `<h4><i class="fas fa-wifi"></i> Gagal Memuat</h4><p style="font-size:12px;">Sistem gagal membaca pangkalan data. Pastikan pengaturan share Google Sheets Anda sudah diatur ke 'Anyone with the link' sebagai Viewer.</p>`;
+        boxHasil.innerHTML = `<h4><i class="fas fa-exclamation-triangle"></i> Gagal Memuat</h4><p style="font-size:12px;">Pastikan ID Google Sheets benar dan nama Sheet sesuai (Sheet1 atau Lembar 1). Buka Inspect Element > Console untuk melihat error detail.</p>`;
     }
 }
     </script>
