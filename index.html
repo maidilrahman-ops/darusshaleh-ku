@@ -3,61 +3,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yayasan Darusshaleh - Official Website</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>DARUSSHALEH WEB | SMP Plus & SMA IT Darusshaleh</title>
+    <meta name="description" content="Islamic Boarding School Darusshaleh - Generasi Gemilang. SMP Plus & SMA IT Darusshaleh, Solok Selatan, Sumatera Barat.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        /* ===================================================================
-           CSS RESET & GLOBAL VARIABLES
-           =================================================================== */
-        :root {
-            --hijau-utama: #125c34;
-            --hijau-terang: #1b8a4a;
-            --hijau-supergelap: #0a361e;
-            --kuning-emas: #f1c40f;
-            --kuning-muda: #fef9e7;
-            --teks-terang: #ffffff;
-            --teks-gelap: #2c3e50;
-            --bg-terang: #f8f9fa;
-            --transisi: all 0.3s ease;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --hijau-utama: #0D5C2E;
+            --hijau-muda: #1B8A4A;
+            --kuning-emas: #E5A100;
+            --kuning-muda: #FFF3CD;
+            --teks-gelap: #1A1A1A;
+            --bg-light: #F9FAFB;
+            --putih: #FFFFFF;
+            --hijau-supergelap: #0A3D1F;
+        }
+
+        html {
             scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg-terang);
+            font-family: 'Poppins', sans-serif;
             color: var(--teks-gelap);
-            overflow-x: hidden;
+            background: var(--bg-light);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
+        /* ========== NAVBAR ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            padding: 10px 0;
+        }
+
+        .navbar.scrolled {
+            box-shadow: 0 5px 30px rgba(0,0,0,0.15);
+        }
+
+        .nav-container {
+            max-width: 1300px;
             margin: 0 auto;
-            padding: 0 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            flex-wrap: wrap;
         }
 
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--hijau-utama), var(--hijau-muda));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--kuning-emas);
+            font-weight: 900;
+            font-size: 22px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(13, 92, 46, 0.3);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            color: var(--hijau-utama);
+            font-size: 18px;
+            line-height: 1.2;
+        }
+
+        .logo-text small {
+            display: block;
+            font-weight: 400;
+            font-size: 11px;
+            color: #666;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--teks-gelap);
+            font-weight: 500;
+            font-size: 14px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: var(--kuning-muda);
+            color: var(--hijau-utama);
+        }
+
+        .btn-daftar-nav {
+            background: var(--kuning-emas) !important;
+            color: white !important;
+            font-weight: 700 !important;
+            padding: 10px 20px !important;
+            border-radius: 30px !important;
+            box-shadow: 0 4px 15px rgba(229, 161, 0, 0.4);
+            animation: pulse 2s infinite;
+            margin-left: 5px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(229, 161, 0, 0.4); }
+            50% { box-shadow: 0 4px 30px rgba(229, 161, 0, 0.7); }
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 26px;
+            cursor: pointer;
+            color: var(--hijau-utama);
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0A3D1F 0%, #0D5C2E 40%, #1B6B3A 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 30px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before, .hero::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .hero::before {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(229,161,0,0.15) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(229,161,0,0.1) 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+            animation: float 6s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+        }
+
+        .hero-logo-circle {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--kuning-emas), #F0B800);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-weight: 900;
+            font-size: 48px;
+            color: var(--hijau-supergelap);
+            box-shadow: 0 20px 60px rgba(229, 161, 0, 0.4);
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 20px 60px rgba(229, 161, 0, 0.4); }
+            50% { box-shadow: 0 20px 80px rgba(229, 161, 0, 0.7); }
+        }
+
+        .hero h1 {
+            color: white;
+            font-size: 46px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .hero .motto {
+            color: var(--kuning-emas);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            color: rgba(255,255,255,0.9);
+            font-size: 18px;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cards {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .hero-card {
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 30px 25px;
+            text-align: center;
+            color: white;
+            width: 250px;
+            transition: 0.4s;
+            cursor: pointer;
+        }
+
+        .hero-card:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .hero-card i {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: var(--kuning-emas);
+        }
+
+        .hero-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .hero-card small {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* Countdown Wrapper */
+        .countdown-wrapper {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .countdown-box {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 20px;
+            padding: 25px 20px;
+            min-width: 280px;
+            flex: 1;
+            max-width: 350px;
+        }
+
+        .countdown-box h4 {
+            color: var(--kuning-muda);
+            margin-bottom: 15px;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        .countdown-box .countdown-timer {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .count-item {
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 12px 8px;
+            min-width: 65px;
+        }
+
+        .count-number {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--kuning-emas);
+            display: block;
+            line-height: 1;
+        }
+
+        .count-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.8);
+            margin-top: 4px;
+        }
+
+        /* ========== SECTION STYLES ========== */
         section {
-            padding: 80px 0;
+            padding: 80px 30px;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
         }
 
         .section-title h2 {
-            font-size: 32px;
+            font-size: 36px;
+            font-weight: 800;
             color: var(--hijau-utama);
-            font-weight: 700;
             margin-bottom: 10px;
         }
 
@@ -65,258 +368,129 @@
             width: 80px;
             height: 4px;
             background: var(--kuning-emas);
-            margin: 0 auto 15px;
+            margin: 15px auto;
             border-radius: 2px;
         }
 
         .section-title p {
             color: #666;
+            font-size: 16px;
             max-width: 600px;
             margin: 0 auto;
-            font-size: 15px;
         }
 
-        /* Generic Buttons */
-        .btn-daftar-besar {
-            display: inline-block;
-            background: var(--kuning-emas);
-            color: var(--hijau-supergelap);
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-weight: 700;
-            text-decoration: none;
-            box-shadow: 0 5px 15px rgba(241, 196, 15, 0.4);
-            transition: var(--transisi);
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .btn-daftar-besar:hover {
+        /* ========== BERITA ========== */
+        #berita {
+            background: var(--putih);
+        }
+
+        .berita-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .berita-card {
             background: white;
-            color: var(--hijau-utama);
-            transform: translateY(-3px);
-        }
-
-        /* ===================================================================
-           NAVIGATION BAR
-           =================================================================== */
-        #navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: transparent;
-            z-index: 1000;
-            transition: var(--transisi);
-            padding: 20px 0;
-        }
-
-        #navbar.scrolled {
-            background: var(--hijau-utama);
-            padding: 12px 0;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: white;
-            text-decoration: none;
-        }
-
-        .logo i {
-            font-size: 28px;
-            color: var(--kuning-emas);
-        }
-
-        .logo-text h1 {
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            line-height: 1.2;
-        }
-
-        .logo-text span {
-            font-size: 11px;
-            color: var(--kuning-emas);
-            display: block;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            list-style: none;
-            gap: 5px;
-        }
-
-        .nav-links a {
-            color: rgba(255,255,255,0.85);
-            text-decoration: none;
-            padding: 8px 16px;
-            font-size: 14px;
-            font-weight: 500;
-            border-radius: 20px;
-            transition: var(--transisi);
-        }
-
-        .nav-links a:hover {
-            color: var(--kuning-emas);
-            background: rgba(255,255,255,0.1);
-        }
-
-        .nav-links .btn-daftar-nav {
-            background: var(--kuning-emas);
-            color: var(--hijau-supergelap);
-            font-weight: 700;
-            margin-left: 10px;
-            box-shadow: 0 4px 10px rgba(241, 196, 15, 0.3);
-        }
-
-        .nav-links .btn-daftar-nav:hover {
-            background: white;
-            color: var(--hijau-utama);
-        }
-
-        .menu-toggle {
-            display: none;
-            color: white;
-            font-size: 24px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+            transition: 0.3s;
             cursor: pointer;
         }
 
-        /* ===================================================================
-           HERO SECTION
-           =================================================================== */
-        #home {
-            background: linear-gradient(rgba(18, 92, 52, 0.85), rgba(10, 54, 30, 0.95)), url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3') center/cover no-repeat;
-            min-height: 100vh;
+        .berita-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .berita-img {
+            height: 200px;
+            background: linear-gradient(135deg, var(--hijau-muda), var(--hijau-utama));
             display: flex;
             align-items: center;
-            color: white;
-            padding-top: 100px;
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1.2sfr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .hero-text h2 {
-            font-size: 48px;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 20px;
-        }
-
-        .hero-text h2 span {
-            color: var(--kuning-emas);
-        }
-
-        .hero-text p {
-            font-size: 16px;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 30px;
-        }
-
-        /* ===================================================================
-           COUNTDOWN WIDGETS
-           =================================================================== */
-        .countdown-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .countdown-box {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 25px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            text-align: center;
-        }
-
-        .countdown-box h4 {
-            font-size: 16px;
-            color: var(--kuning-emas);
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .timer {
-            display: flex;
             justify-content: center;
-            gap: 15px;
-        }
-
-        .time-segment {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 10px;
-            border-radius: 10px;
-            min-width: 65px;
-        }
-
-        .time-segment span {
-            display: block;
-            font-size: 22px;
-            font-weight: 700;
-            color: white;
-        }
-
-        .time-segment label {
-            font-size: 10px;
+            font-size: 60px;
             color: rgba(255,255,255,0.6);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
-        /* ===================================================================
-           KELULUSAN & NIS CHECK SECTION
-           =================================================================== */
-        #kelulusan {
-            background: linear-gradient(135deg, var(--hijau-utama), var(--hijau-supergelap));
+        .berita-body {
+            padding: 20px;
+        }
+
+        .berita-body .date {
+            color: var(--kuning-emas);
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .berita-body h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--hijau-utama);
+            margin-bottom: 10px;
+        }
+
+        .berita-body p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .btn-baca {
+            color: var(--kuning-emas);
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-semua {
+            display: inline-block;
+            margin-top: 40px;
+            background: var(--hijau-utama);
             color: white;
+            padding: 14px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
         }
 
-        .kelulusan-content {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 40px;
-            align-items: start;
+        .btn-semua:hover {
+            background: var(--hijau-muda);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(13, 92, 46, 0.3);
         }
 
-        /* Hasil box animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* ========== GALERI ========== */
+        #galeri {
+            background: var(--bg-light);
         }
 
-        /* ===================================================================
-           GALERI SECTION
-           =================================================================== */
-        .filter-container {
+        .filter-buttons {
             display: flex;
-            justify-content: center;
             gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
             margin-bottom: 40px;
         }
 
         .filter-btn {
-            padding: 10px 24px;
+            padding: 10px 22px;
             border: 2px solid var(--hijau-utama);
             background: transparent;
-            color: var(--hijau-utama);
-            font-weight: 600;
-            border-radius: 25px;
+            border-radius: 30px;
             cursor: pointer;
-            transition: var(--transisi);
+            font-weight: 600;
+            color: var(--hijau-utama);
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
         }
 
         .filter-btn.active, .filter-btn:hover {
@@ -326,275 +500,1014 @@
 
         .galeri-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
         }
 
         .galeri-item {
-            background: white;
-            border-radius: 15px;
+            position: relative;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            transition: var(--transisi);
+            cursor: pointer;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--hijau-muda), var(--kuning-emas));
+            transition: 0.3s;
         }
 
         .galeri-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
         }
 
-        .galeri-img {
-            height: 220px;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .galeri-info {
-            padding: 20px;
-        }
-
-        .galeri-info span {
-            font-size: 12px;
-            color: var(--hijau-terang);
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .galeri-info h3 {
-            font-size: 18px;
-            margin-top: 5px;
-            color: var(--teks-gelap);
-        }
-
-        /* ===================================================================
-           FOOTER SECTION
-           =================================================================== */
-        footer {
-            background: #0d1e14;
+        .galeri-item .icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
             color: rgba(255,255,255,0.7);
-            padding: 60px 0 20px;
+        }
+
+        .galeri-item .label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 10px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        /* ========== PROFIL ========== */
+        #profil {
+            background: var(--putih);
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 14px 35px;
+            border: 2px solid var(--hijau-utama);
+            background: transparent;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--hijau-utama);
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .tab-btn.active {
+            background: var(--hijau-utama);
+            color: white;
+            box-shadow: 0 8px 25px rgba(13, 92, 46, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profil-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .profil-info h3 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--hijau-utama);
+            margin-bottom: 20px;
+        }
+
+        .profil-info .badge {
+            display: inline-block;
+            background: var(--kuning-muda);
+            color: var(--kuning-emas);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .profil-info ul {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .profil-info ul li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .profil-info ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--hijau-muda);
+            font-weight: 700;
+        }
+
+        .map-container {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 350px;
+            border: 0;
+        }
+
+        /* ========== KELULUSAN & FITUR CEK NISN ========== */
+        #kelulusan {
+            background: linear-gradient(135deg, #0D5C2E 0%, #1B6B3A 50%, #0D5C2E 100%);
+            color: white;
+        }
+
+        #kelulusan .section-title h2 {
+            color: white;
+        }
+
+        #kelulusan .section-title .line {
+            background: var(--kuning-emas);
+        }
+
+        #kelulusan .section-title p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .kelulusan-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .kelulusan-photo {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            color: rgba(255,255,255,0.4);
+            border: 2px dashed rgba(255,255,255,0.3);
+        }
+
+        .kelulusan-info h3 {
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--kuning-emas);
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            height: 12px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: var(--kuning-emas);
+            height: 100%;
+            border-radius: 10px;
+            width: 100%;
+            animation: progressAnim 2s ease-out;
+        }
+
+        @keyframes progressAnim {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        .prestasi-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .prestasi-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .prestasi-card i {
+            font-size: 30px;
+            color: var(--kuning-emas);
+            margin-bottom: 10px;
+        }
+
+        .btn-kelulusan {
+            display: inline-block;
+            margin-top: 25px;
+            margin-right: 10px;
+            padding: 12px 28px;
+            border: 2px solid var(--kuning-emas);
+            color: var(--kuning-emas);
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .btn-kelulusan:hover {
+            background: var(--kuning-emas);
+            color: var(--hijau-supergelap);
+        }
+
+        /* Fitur Box Cek Kelulusan Mandiri */
+        .cek-mandiri-container {
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .cek-mandiri-container h4 {
+            font-size: 22px;
+            color: var(--kuning-emas);
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .cek-form-grid {
+            display: flex;
+            gap: 15px;
+            max-width: 800px;
+            margin: 25px auto 0;
+            flex-wrap: wrap;
+        }
+
+        .input-wrapper {
+            position: relative;
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--hijau-utama);
+            font-size: 16px;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 15px 14px 48px;
+            border-radius: 30px;
+            border: none;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
             font-size: 14px;
+            color: var(--teks-gelap);
+            font-weight: 500;
+        }
+
+        .btn-submit-cek {
+            background: var(--kuning-emas);
+            color: var(--hijau-supergelap);
+            border: none;
+            padding: 14px 35px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            transition: 0.3s;
+            min-width: 160px;
+        }
+
+        .btn-submit-cek:hover {
+            background: #F0B800;
+            transform: scale(1.03);
+        }
+
+        .hasil-kelulusan-box {
+            max-width: 800px;
+            margin: 30px auto 0;
+            border-radius: 18px;
+            padding: 30px;
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .status-lulus {
+            background: rgba(27, 138, 74, 0.25);
+            border: 2px solid #1B8A4A;
+        }
+
+        .status-gagal {
+            background: rgba(220, 53, 69, 0.25);
+            border: 2px solid #dc3545;
+        }
+
+        .hasil-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        .hasil-table td {
+            padding: 8px 12px;
+            font-size: 15px;
+        }
+
+        .hasil-table td:first-child {
+            font-weight: 600;
+            width: 30%;
+            color: var(--kuning-muda);
+        }
+
+        /* ========== KESAN PESAN ========== */
+        #kesan {
+            background: var(--putih);
+        }
+
+        .testimoni-slider {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .testimoni-card {
+            background: var(--bg-light);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: 0.3s;
+            border: 1px solid #eee;
+        }
+
+        .testimoni-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        .testimoni-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--hijau-muda), var(--kuning-emas));
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: white;
+        }
+
+        .testimoni-card .stars {
+            color: var(--kuning-emas);
+            margin: 10px 0;
+        }
+
+        .testimoni-card p {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .testimoni-card .name {
+            font-weight: 700;
+            color: var(--hijau-utama);
+        }
+
+        /* ========== PPDB ========== */
+        #ppdb {
+            background: linear-gradient(135deg, var(--kuning-muda) 0%, #FFF8E1 100%);
+        }
+
+        .ppdb-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .ppdb-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.05);
+            border: 2px solid transparent;
+            transition: 0.3s;
+        }
+
+        .ppdb-card:hover {
+            border-color: var(--kuning-emas);
+            transform: translateY(-5px);
+        }
+
+        .ppdb-card h4 {
+            color: var(--hijau-utama);
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .ppdb-card .gelombang {
+            display: inline-block;
+            background: var(--hijau-utama);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .ppdb-card .tanggal {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .btn-daftar-besar {
+            display: inline-block;
+            background: var(--kuning-emas);
+            color: white;
+            padding: 16px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 18px;
+            transition: 0.3s;
+            box-shadow: 0 8px 30px rgba(229, 161, 0, 0.5);
+            text-align: center;
+        }
+
+        .btn-daftar-besar:hover {
+            background: #F0B800;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(229, 161, 0, 0.6);
+        }
+
+        /* ========== KONTAK ========== */
+        #kontak {
+            background: var(--hijau-supergelap);
+            color: white;
+        }
+
+        .kontak-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .kontak-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .kontak-item i {
+            font-size: 24px;
+            color: var(--kuning-emas);
+            margin-top: 3px;
+        }
+
+        .kontak-item h4 {
+            margin-bottom: 5px;
+            color: var(--kuning-emas);
+        }
+
+        .kontak-item a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: #061F10;
+            color: rgba(255,255,255,0.7);
+            padding: 60px 30px 30px;
         }
 
         .footer-grid {
             display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 40px;
-            margin-bottom: 40px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
         }
 
-        .footer-about h3 {
+        .footer-col h4 {
             color: white;
-            font-size: 20px;
-            margin-bottom: 15px;
-        }
-
-        .footer-links h4, .footer-contact h4 {
-            color: var(--kuning-emas);
             margin-bottom: 20px;
-            font-size: 16px;
+            font-size: 18px;
         }
 
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-
-        .footer-links a {
-            color: rgba(255,255,255,0.7);
+        .footer-col a {
+            display: block;
+            color: rgba(255,255,255,0.6);
             text-decoration: none;
-            transition: var(--transisi);
+            margin-bottom: 8px;
+            transition: 0.3s;
         }
 
-        .footer-links a:hover {
-            color: white;
-            padding-left: 5px;
+        .footer-col a:hover {
+            color: var(--kuning-emas);
         }
 
-        .footer-contact p {
-            margin-bottom: 12px;
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .social-icons a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            font-size: 20px;
+            transition: 0.3s;
+            color: white;
+            text-decoration: none;
         }
 
-        .footer-contact i {
-            color: var(--kuning-emas);
+        .social-icons a:hover {
+            background: var(--kuning-emas);
+            transform: translateY(-3px);
         }
 
         .footer-bottom {
             text-align: center;
             border-top: 1px solid rgba(255,255,255,0.1);
             padding-top: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            font-size: 14px;
         }
 
-        /* ===================================================================
-           RESPONSIVE MEDIA QUERIES
-           =================================================================== */
-        @media (max-width: 992px) {
-            .hero-grid, .kelulusan-content {
-                grid-template-columns: 1fr;
-            }
-            .menu-toggle {
+        /* ========== LIGHTBOX ========== */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* ========== MOBILE RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .hamburger {
                 display: block;
             }
+
             .nav-links {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: var(--hijau-supergelap);
-                flex-direction: column;
-                padding: 20px;
-                gap: 10px;
-                box-shadow: 0 10px 15px rgba(0,0,0,0.2);
                 display: none;
+                flex-direction: column;
+                width: 100%;
+                background: white;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                border-radius: 0 0 16px 16px;
             }
+
             .nav-links.show {
                 display: flex;
             }
-            .nav-links .btn-daftar-nav {
-                margin-left: 0;
-                width: 100%;
-                text-align: center;
-            }
-            .hero-text h2 {
-                font-size: 36px;
-            }
-        }
 
-        @media (max-width: 768px) {
-            .footer-grid {
+            .hero h1 {
+                font-size: 28px;
+            }
+            .hero .motto {
+                font-size: 20px;
+            }
+
+            .profil-grid, .kelulusan-content {
                 grid-template-columns: 1fr;
             }
-            .filter-container {
-                flex-wrap: wrap;
+
+            .kelulusan-content {
+                text-align: center;
+            }
+
+            .count-number {
+                font-size: 28px;
+            }
+
+            .cek-form-grid {
+                flex-direction: column;
+            }
+            .btn-submit-cek {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
 
-    <nav id="navbar">
-        <div class="container nav-container">
-            <a href="#home" class="logo">
-                <i class="fas fa-mosque"></i>
-                <div class="logo-text">
-                    <h1>DARUSSHALEH</h1>
-                    <span>Islamic Education Institution</span>
-                </div>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <div class="logo-circle">DRS</div>
+                <div class="logo-text">DARUSSHALEH <small>Islamic Boarding School</small></div>
             </a>
-            <i class="fas fa-bars menu-toggle" onclick="toggleMenu()"></i>
+            <div class="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#home" onclick="closeMenu()">Beranda</a></li>
+                <li><a href="#home" onclick="closeMenu()">Home</a></li>
+                <li><a href="#berita" onclick="closeMenu()">Berita</a></li>
+                <li><a href="#galeri" onclick="closeMenu()">Galeri</a></li>
+                <li><a href="#profil" onclick="closeMenu()">Profil</a></li>
                 <li><a href="#kelulusan" onclick="closeMenu()">Kelulusan</a></li>
-                <li><a href="#galeri" onclick="closeMenu()">Galeri Kegiatan</a></li>
-                <li><a href="#pendaftaran" class="btn-daftar-nav" onclick="closeMenu()">PPDB 2026</a></li>
+                <li><a href="#ppdb" onclick="closeMenu()">SPMB</a></li>
+                <li><a href="#kontak" onclick="closeMenu()">Kontak</a></li>
+                <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScsV9CJG2E5laydcKbNqNoqwWhEooiGUGaBZ-quGueOB37Jjg/viewform" target="_blank" class="btn-daftar-nav">Daftar SMP</a></li>
+                <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfpz5xopDlJ9y7SdZGfrGtI0158dSO8iUvSdtJq34FMIZoEaA/viewform" target="_blank" class="btn-daftar-nav">Daftar SMA</a></li>
             </ul>
         </div>
     </nav>
 
-    <header id="home">
-        <div class="container hero-grid">
-            <div class="hero-text">
-                <h2>Membentuk Generasi <span>Rabbani, Cerdas & Berakhlak Mulia</span></h2>
-                <p>Selamat datang di portal informasi resmi Yayasan Pendidikan Darusshaleh. Kami berkomitmen menyelenggarakan pendidikan holistik berbasis nilai Al-Qur'an dan Sunnah untuk masa depan cemerlang.</p>
-                <a href="#kelulusan" class="btn-daftar-besar"><i class="fas fa-graduation-cap"></i> Cek Kelulusan</a>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-logo-circle">DRS</div>
+            <h1>Welcome to Darusshaleh<br>Islamic Boarding School</h1>
+            <div class="motto">Generasi Gemilang</div>
+            <p>Mencetak generasi Qur'ani yang berakhlak mulia, berprestasi, dan siap menghadapi tantangan zaman.</p>
+
+            <div class="hero-cards">
+                <div class="hero-card" onclick="document.getElementById('profil').scrollIntoView()">
+                    <i class="fas fa-book"></i>
+                    <h3>SMP Plus Darusshaleh</h3>
+                    <small>Akreditasi B • Full Day • Tahfidz</small>
+                </div>
+                <div class="hero-card" onclick="document.getElementById('profil').scrollIntoView()">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>SMA IT Darusshaleh</h3>
+                    <small>Akreditasi B • Boarding • Angkatan Pertama</small>
+                </div>
             </div>
-            
-            <div class="countdown-container">
+
+            <div class="countdown-wrapper">
                 <div class="countdown-box" id="sma-countdown-box">
-                    <h4>🎓 PENGUMUMAN KELULUSAN SMA IT</h4>
-                    <div class="timer" id="countdown-sma">
-                        <div class="time-segment"><span id="sma-days">00</span><label>Hari</label></div>
-                        <div class="time-segment"><span id="sma-hours">00</span><label>Jam</label></div>
-                        <div class="time-segment"><span id="sma-minutes">00</span><label>Menit</label></div>
-                        <div class="time-segment"><span id="sma-seconds">00</span><label>Detik</label></div>
+                    <h4>🎓 Pengumuman Kelulusan SMA IT</h4>
+                    <div class="countdown-timer" id="countdown-sma">
+                        <div class="count-item"><span class="count-number" id="sma-days">00</span><span class="count-label">Hari</span></div>
+                        <div class="count-item"><span class="count-number" id="sma-hours">00</span><span class="count-label">Jam</span></div>
+                        <div class="count-item"><span class="count-number" id="sma-minutes">00</span><span class="count-label">Menit</span></div>
+                        <div class="count-item"><span class="count-number" id="sma-seconds">00</span><span class="count-label">Detik</span></div>
                     </div>
                 </div>
-                
-                <div class="countdown-box" id="smp-countdown-box">
-                    <h4>🎓 PENGUMUMAN KELULUSAN SMP PLUS</h4>
-                    <div class="timer" id="countdown-smp">
-                        <div class="time-segment"><span id="smp-days">00</span><label>Hari</label></div>
-                        <div class="time-segment"><span id="smp-hours">00</span><label>Jam</label></div>
-                        <div class="time-segment"><span id="smp-minutes">00</span><label>Menit</label></div>
-                        <div class="time-segment"><span id="smp-seconds">00</span><label>Detik</label></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <section id="kelulusan">
-        <div class="container">
-            <div class="section-title">
-                <h2 style="color: white;">Cek Kelulusan Siswa</h2>
-                <div class="line" style="background: var(--kuning-emas);"></div>
-                <p style="color: rgba(255,255,255,0.8);">Silakan masukkan Nomor Induk Siswa Nasional (NISN) Anda untuk melihat status kelulusan resmi beserta akses berkas Surat Keputusan (SK).</p>
-            </div>
-            
-            <div class="kelulusan-content">
-                <div class="login-nisn-box" style="background: rgba(255,255,255,0.08); padding: 40px 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
-                    <h3 style="color: var(--kuning-emas); margin-bottom: 20px; font-size: 22px; font-weight: 700;"><i class="fas fa-key"></i> Gerbang Kelulusan</h3>
-                    <form id="formCekKelulusan" onsubmit="prosesCekKelulusan(event)">
-                        <div style="margin-bottom: 25px; text-align: left;">
-                            <label for="nisInput" style="display: block; color: white; margin-bottom: 10px; font-size: 14px; font-weight: 500;">Masukkan NIS Siswa:</label>
-                            <input type="text" id="nisInput" placeholder="Contoh: 202601001" required style="width: 100%; padding: 14px 20px; border-radius: 30px; border: 2px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.95); font-size: 16px; font-weight: 600; color: #1a1a1a; box-sizing: border-box; outline: none; transition: 0.3s;">
-                        </div>
-                        <button type="submit" class="btn-daftar-besar" style="width: 100%; border: none; cursor: pointer; padding: 14px; font-size: 16px;">
-                            <i class="fas fa-search"></i> Periksa Status Anda
-                        </button>
-                    </form>
-                </div>
-
-                <div class="kelulusan-info" id="hasilKelulusanBox">
-                    <div style="text-align: center; padding: 45px 20px; border: 2px dashed rgba(255,255,255,0.25); border-radius: 20px; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                        <i class="fas fa-graduation-cap" style="font-size: 60px; color: rgba(255,255,255,0.3); margin-bottom: 15px;"></i>
-                        <p style="color: rgba(255,255,255,0.65); font-size: 15px; max-width: 400px;">Sistem akan memvalidasi data kelulusan secara otomatis setelah Anda mengetikkan NIS resmi pada kolom di sebelah kiri.</p>
+                <div class="countdown-box">
+                    <h4>🎓 Pengumuman Kelulusan SMP Plus</h4>
+                    <div class="countdown-timer" id="countdown-smp">
+                        <div class="count-item"><span class="count-number" id="smp-days">00</span><span class="count-label">Hari</span></div>
+                        <div class="count-item"><span class="count-number" id="smp-hours">00</span><span class="count-label">Jam</span></div>
+                        <div class="count-item"><span class="count-number" id="smp-minutes">00</span><span class="count-label">Menit</span></div>
+                        <div class="count-item"><span class="count-number" id="smp-seconds">00</span><span class="count-label">Detik</span></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <section id="berita">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>📰 Berita & Prestasi Terkini</h2>
+                <div class="line"></div>
+                <p>Kabar terbaru seputar prestasi gemilang siswa-siswi Darusshaleh</p>
+            </div>
+            <div class="berita-grid">
+                <div class="berita-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="berita-img"><i class="fas fa-trophy"></i></div>
+                    <div class="berita-body">
+                        <div class="date">📅 10 Juni 2024</div>
+                        <h3>Harumkan Nama Solok Selatan, Bupati Apresiasi Siswa SMP Plus Darusshaleh Juara Cerdas Quran</h3>
+                        <p>IBS SMP Plus Darusshaleh berhasil memenangkan lomba Cerdas Quran yang diadakan oleh stasiun TV lokal di Padang...</p>
+                        <a href="https://padang.tribunnews.com/2024/06/10/harumkan-nama-solok-selatan-bupati-khairunas-apresiasi-prestasi-siswa-smp-plus-darussaleh" target="_blank" class="btn-baca">Baca Selengkapnya →</a>
+                    </div>
+                </div>
+
+                <div class="berita-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="berita-img"><i class="fas fa-star"></i></div>
+                    <div class="berita-body">
+                        <div class="date">📅 6 Juni 2024</div>
+                        <h3>Padang dan Solok Selatan Rajai Cerdas Quran Sumbar, SMP Plus Darusshaleh Jadi Juara</h3>
+                        <p>Grand Final Cerdas Quran tingkat SMP se-Sumatera Barat berakhir dengan kemenangan gemilang dari utusan Solok Selatan...</p>
+                        <a href="https://minangsatu.com/harumkan-nama-solsel-di-kancah-provinsi-bupati--secara-spesial-mengundang-smp-plus-darusshaleh_31973" target="_blank" class="btn-baca">Baca Selengkapnya →</a>
+                    </div>
+                </div>
+
+                <div class="berita-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="berita-img"><i class="fas fa-quran"></i></div>
+                    <div class="berita-body">
+                        <div class="date">📅 7 Januari 2026</div>
+                        <h3>SMP Plus Darusshaleh Pekonina Juara Cerdas Qur'an Tingkat Kabupaten Solok Selatan</h3>
+                        <p>Untuk tingkat SMP/MTs, juara pertama diraih oleh Hafiz/Hafizah dari SMP Plus Darusshaleh Pekonina...</p>
+                        <a href="https://rakyatsumbar.id/smp-plus-darusshaleh-pekonina-juara-cerdas-quran/" target="_blank" class="btn-baca">Baca Selengkapnya →</a>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <a href="#" class="btn-semua">Lihat Semua Berita →</a>
+            </div>
+        </div>
+    </section>
+
     <section id="galeri">
         <div class="container">
-            <div class="section-title">
-                <h2>Galeri Kegiatan & Fasilitas</h2>
+            <div class="section-title" data-aos="fade-up">
+                <h2>📸 Galeri Darusshaleh</h2>
                 <div class="line"></div>
-                <p>Dokumentasi aktivitas santri/siswa, infrastruktur penunjang belajar, serta kilas balik agenda Yayasan Darusshaleh.</p>
+                <p>Dokumentasi kegiatan dan momen berharga di Darusshaleh Islamic Boarding School</p>
             </div>
-            
-            <div class="filter-container">
-                <button class="filter-btn active" onclick="filterGallery('all')">Semua</button>
-                <button class="filter-btn" onclick="filterGallery('kegiatan')">Kegiatan</button>
-                <button class="filter-btn" onclick="filterGallery('fasilitas')">Fasilitas</button>
+            <div class="filter-buttons" data-aos="fade-up">
+                <button class="filter-btn active" onclick="filterGaleri('semua', this)">Semua</button>
+                <button class="filter-btn" onclick="filterGaleri('akademik', this)">Akademik</button>
+                <button class="filter-btn" onclick="filterGaleri('keagamaan', this)">Keagamaan</button>
+                <button class="filter-btn" onclick="filterGaleri('olahraga', this)">Olahraga</button>
+                <button class="filter-btn" onclick="filterGaleri('pramuka', this)">Pramuka</button>
+                <button class="filter-btn" onclick="filterGaleri('kelulusan', this)">Kelulusan</button>
             </div>
-            
-            <div class="galeri-grid">
-                <div class="galeri-item" data-category="kegiatan">
-                    <div class="galeri-img" style="background-image: url('https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3');"></div>
-                    <div class="galeri-info">
-                        <span>Kegiatan</span>
-                        <h3>KBM Interaktif Kelas Tahfidz</h3>
+            <div class="galeri-grid" id="galeriGrid">
+                <div class="galeri-item" data-kategori="akademik" onclick="openLightbox('Kegiatan Belajar Mengajar')"><div class="icon">📚</div><div class="label">KBM - Akademik</div></div>
+                <div class="galeri-item" data-kategori="keagamaan" onclick="openLightbox('Shalat Berjamaah')"><div class="icon">🕌</div><div class="label">Shalat Berjamaah</div></div>
+                <div class="galeri-item" data-kategori="olahraga" onclick="openLightbox('Futsal Championship')"><div class="icon">⚽</div><div class="label">Futsal Championship</div></div>
+                <div class="galeri-item" data-kategori="pramuka" onclick="openLightbox('Persami 2025')"><div class="icon">🏕️</div><div class="label">Persami 2025</div></div>
+                <div class="galeri-item" data-kategori="kelulusan" onclick="openLightbox('Wisuda Angkatan')"><div class="icon">🎓</div><div class="label">Wisuda Angkatan</div></div>
+                <div class="galeri-item" data-kategori="keagamaan" onclick="openLightbox('Tahfidz Camp')"><div class="icon">📖</div><div class="label">Tahfidz Camp</div></div>
+                <div class="galeri-item" data-kategori="akademik" onclick="openLightbox('Praktikum IPA')"><div class="icon">🔬</div><div class="label">Praktikum IPA</div></div>
+                <div class="galeri-item" data-kategori="olahraga" onclick="openLightbox('Pencak Silat')"><div class="icon">🥋</div><div class="label">Pencak Silat</div></div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="#" class="btn-semua">Lihat Galeri Lengkap →</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="profil">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>🏫 Profil Sekolah</h2>
+                <div class="line"></div>
+                <p>Mengenal lebih dekat Darusshaleh Islamic Boarding School</p>
+            </div>
+            <div class="tab-buttons" data-aos="fade-up">
+                <button class="tab-btn active" onclick="switchTab('smp', this)">📘 SMP Plus Darusshaleh</button>
+                <button class="tab-btn" onclick="switchTab('sma', this)">📙 SMA IT Darusshaleh</button>
+            </div>
+
+            <div class="tab-content active" id="tab-smp">
+                <div class="profil-grid">
+                    <div class="profil-info" data-aos="fade-right">
+                        <span class="badge">Akreditasi B</span>
+                        <h3>SMP Plus Darusshaleh</h3>
+                        <ul>
+                            <li>Full Day School (Senin - Jumat)</li>
+                            <li>Program Tahfidz Al-Qur'an (Target 5 Juz)</li>
+                            <li>Kurikulum Nasional 2013</li>
+                            <li>Ekstrakurikuler: Pramuka, Pencak Silat, Futsal, Kaligrafi</li>
+                            <li>Laboratorium Komputer & IPA</li>
+                            <li>Masjid untuk Ibadah Harian</li>
+                        </ul>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScsV9CJG2E5laydcKbNqNoqwWhEooiGUGaBZ-quGueOB37Jjg/viewform" target="_blank" class="btn-daftar-besar" style="font-size: 14px; padding: 12px 30px;">Daftar SMP Sekarang →</a>
+                    </div>
+                    <div class="map-container" data-aos="fade-left">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.87123456789!2d101.2345678!3d-1.3456789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMcKwMjAnNDQuNCJTIDEwMcKwMTQnMDQuNCJF!5e0!3m2!1sid!2sid!4v1700000000000" allowfullscreen="" loading="lazy" title="Lokasi Darusshaleh"></iframe>
                     </div>
                 </div>
-                <div class="galeri-item" data-category="fasilitas">
-                    <div class="galeri-img" style="background-image: url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixlib=rb-4.0.3');"></div>
-                    <div class="galeri-info">
-                        <span>Fasilitas</span>
-                        <h3>Perpustakaan & Ruang Baca</h3>
+            </div>
+
+            <div class="tab-content" id="tab-sma">
+                <div class="profil-grid">
+                    <div class="profil-info" data-aos="fade-right">
+                        <span class="badge">Akreditasi B</span>
+                        <span class="badge" style="margin-left: 5px; background: #E5A100; color: white;">Angkatan Pertama (2026)</span>
+                        <h3>SMA IT Darusshaleh</h3>
+                        <ul>
+                            <li>Program Boarding (Asrama Putra & Putri)</li>
+                            <li>Program Tahfidz Al-Qur'an (Target 10 Juz)</li>
+                            <li>Jurusan IPA dan IPS</li>
+                            <li>Ekstrakurikuler: Pramuka, Pencak Silat, Futsal, Kaligrafi, Hadroh</li>
+                            <li>Fasilitas Asrama Lengkap</li>
+                            <li>Bimbingan Masuk Perguruan Tinggi</li>
+                            <li><strong>Kelulusan Perdana Tahun 2026</strong></li>
+                        </ul>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfpz5xopDlJ9y7SdZGfrGtI0158dSO8iUvSdtJq34FMIZoEaA/viewform" target="_blank" class="btn-daftar-besar" style="font-size: 14px; padding: 12px 30px;">Daftar SMA Sekarang →</a>
+                    </div>
+                    <div class="map-container" data-aos="fade-left">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.87123456789!2d101.2345678!3d-1.3456789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMcKwMjAnNDQuNCJTIDEwMcKwMTQnMDQuNCJF!5e0!3m2!1sid!2sid!4v1700000000000" allowfullscreen="" loading="lazy" title="Lokasi Darusshaleh"></iframe>
                     </div>
                 </div>
-                <div class="galeri-item" data-category="kegiatan">
-                    <div class="galeri-img" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3');"></div>
-                    <div class="galeri-info">
-                        <span>Kegiatan</span>
-                        <h3>Manasik Haji Cilik Terpadu</h3>
+            </div>
+        </div>
+    </section>
+
+    <section id="kelulusan">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>🎉 Kelulusan Angkatan 2025/2026</h2>
+                <div class="line"></div>
+                <p>Selamat dan sukses untuk seluruh alumni Darusshaleh</p>
+            </div>
+            <div class="kelulusan-content">
+                <div class="kelulusan-photo" data-aos="fade-right">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="kelulusan-info" data-aos="fade-left">
+                    <h3>🎓 Telah Resmi Menjadi Alumni Darusshaleh</h3>
+                    <p>Selamat kepada seluruh siswa/i Angkatan 2025/2026 yang telah menyelesaikan pendidikan dengan hasil membanggakan. <br> <strong>Termasuk kelulusan perdana SMA IT Darusshaleh Angkatan 1!</strong></p>
+                    <div class="progress-bar"><div class="progress-fill"></div></div>
+                    <p><strong>📊 100% Lulus</strong> | Rata-rata Nilai: <strong>85.5</strong></p>
+
+                    <div class="prestasi-cards">
+                        <div class="prestasi-card"><i class="fas fa-medal"></i><br>Juara 1 OSN<br>Matematika</div>
+                        <div class="prestasi-card"><i class="fas fa-quran"></i><br>Tahfidz<br>5 Juz+</div>
+                        <div class="prestasi-card"><i class="fas fa-star"></i><br>Diterima di<br>Perguruan Tinggi</div>
+                    </div>
+
+                    <a href="#" class="btn-kelulusan">📥 Download Daftar Alumni</a>
+                    <a href="#kesan" class="btn-kelulusan">💬 Tulis Pesan & Kesan</a>
+                </div>
+            </div>
+
+            <div class="cek-mandiri-container" data-aos="fade-up">
+                <h4>🔍 Cek Status Kelulusan Siswa Secara Mandiri</h4>
+                <p style="text-align: center; font-size: 14px; color: rgba(255,255,255,0.8);">Silakan masukkan NISN resmi beserta Sandi/PIN pengumuman yang diberikan sekolah.</p>
+                
+                <form id="formCekKelulusan" onsubmit="handleCekKelulusan(event)" class="cek-form-grid">
+                    <div class="input-wrapper">
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" id="inputNISN" placeholder="Masukkan 10 Digit NISN" maxlength="10" required>
+                    </div>
+                    <div class="input-wrapper">
+                        <i class="fas fa-key"></i>
+                        <input type="password" id="inputSandi" placeholder="Masukkan Sandi Kelulusan" required>
+                    </div>
+                    <button type="submit" class="btn-submit-cek"><i class="fas fa-search"></i> Periksa</button>
+                </form>
+
+                <div id="boxHasilCek" class="hasil-kelulusan-box"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kesan">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>💬 Kesan & Pesan</h2>
+                <div class="line"></div>
+                <p>Cerita dan kenangan dari alumni serta guru Darusshaleh</p>
+            </div>
+            <div class="testimoni-slider">
+                <div class="testimoni-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimoni-avatar">👩</div>
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Terima kasih Darusshaleh, telah membentuk karakter dan akhlakku. Bangga jadi alumni!"</p>
+                    <div class="name">Aisyah</div>
+                    <small>Alumni SMP 2024</small>
+                </div>
+                <div class="testimoni-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimoni-avatar">👦</div>
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Guru-guru di sini luar biasa. Aku bisa hafal 5 juz berkat bimbingan mereka."</p>
+                    <div class="name">Rafi</div>
+                    <small>Alumni SMP 2024</small>
+                </div>
+                <div class="testimoni-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="testimoni-avatar">🧑‍🏫</div>
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"SMA IT Darusshaleh meskipun baru, telah menunjukkan kualitas luar biasa. Lulusan angkatan pertama sangat kami banggakan!"</p>
+                    <div class="name">Losa Okta Prima, S.Pd</div>
+                    <small>Kepala Sekolah SMA IT Darusshaleh</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ppdb">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>📋 Penerimaan Peserta Didik Baru</h2>
+                <div class="line"></div>
+                <p>Bergabunglah bersama Darusshaleh dan jadilah bagian dari Generasi Gemilang!</p>
+            </div>
+            <div class="ppdb-grid" data-aos="fade-up">
+                <div class="ppdb-card">
+                    <span class="gelombang">Gelombang 1</span>
+                    <p class="tanggal">📅 Januari - Maret 2026</p>
+                    <p>Kuota terbatas! Segera daftarkan diri Anda.</p>
+                </div>
+                <div class="ppdb-card">
+                    <span class="gelombang">Gelombang 2</span>
+                    <p class="tanggal">📅 April - Juni 2026</p>
+                    <p>Kesempatan terakhir untuk bergabung.</p>
+                </div>
+            </div>
+            <div style="text-align: center; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;" data-aos="zoom-in">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScsV9CJG2E5laydcKbNqNoqwWhEooiGUGaBZ-quGueOB37Jjg/viewform" target="_blank" class="btn-daftar-besar">
+                    🎓 Daftar SMP Plus
+                </a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfpz5xopDlJ9y7SdZGfrGtI0158dSO8iUvSdtJq34FMIZoEaA/viewform" target="_blank" class="btn-daftar-besar">
+                    🎓 Daftar SMA IT
+                </a>
+                <p style="width: 100%; margin-top: 10px; color: #666; font-size: 13px;">
+                    Klik tombol di atas untuk mengisi formulir pendaftaran online masing-masing jenjang
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontak">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2 style="color: white;">📞 Hubungi Kami</h2>
+                <div class="line"></div>
+                <p style="color: rgba(255,255,255,0.8);">Kami siap melayani informasi lebih lanjut</p>
+            </div>
+            <div class="kontak-grid" data-aos="fade-up">
+                <div class="kontak-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h4>Alamat</h4>
+                        <p>Pekonina, Kec. Pauh Duo, Kab. Solok Selatan, Sumatera Barat 27776</p>
+                    </div>
+                </div>
+                <div class="kontak-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <h4>Telepon / WhatsApp</h4>
+                        <a href="https://wa.me/6285271852151" target="_blank">+62 852-7185-2151</a>
+                    </div>
+                </div>
+                <div class="kontak-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h4>Email</h4>
+                        <a href="mailto:ibs.smpplusdarusshaleh@gmail.com">ibs.smpplusdarusshaleh@gmail.com</a>
                     </div>
                 </div>
             </div>
@@ -602,230 +1515,238 @@
     </section>
 
     <footer>
-        <div class="container footer-grid">
-            <div class="footer-about">
-                <h3>Yayasan Darusshaleh</h3>
-                <p>Membina akhlak, mengukir prestasi. Lembaga pendidikan Islam terpercaya untuk melahirkan pemimpin masa depan yang berwawasan luas dan kokoh di atas manhaj yang benar.</p>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Navigasi</h4>
+                <a href="#home">Home</a>
+                <a href="#berita">Berita</a>
+                <a href="#galeri">Galeri</a>
+                <a href="#profil">Profil</a>
+                <a href="#kelulusan">Kelulusan</a>
+                <a href="#ppdb">PPDB</a>
             </div>
-            <div class="footer-links">
-                <h4>Tautan Cepat</h4>
-                <ul>
-                    <li><a href="#home">Beranda</a></li>
-                    <li><a href="#kelulusan">Cek Kelulusan</a></li>
-                    <li><a href="#galeri">Galeri Kegiatan</a></li>
-                </ul>
+            <div class="footer-col">
+                <h4>Program</h4>
+                <a href="#profil">SMP Plus Darusshaleh</a>
+                <a href="#profil">SMA IT Darusshaleh</a>
+                <a href="#ppdb">PPDB 2026</a>
+                <a href="#">Program Tahfidz</a>
+                <a href="#">Ekstrakurikuler</a>
             </div>
-            <div class="footer-contact">
-                <h4>Hubungi Kami</h4>
-                <p><i class="fas fa-map-marker-alt"></i> Jl. Pendidikan No. 45, Indonesia</p>
-                <p><i class="fas fa-phone-alt"></i> +62 812-3456-7890</p>
-                <p><i class="fas fa-envelope"></i> info@darusshaleh.sch.id</p>
+            <div class="footer-col">
+                <h4>Kontak & Media Sosial</h4>
+                <p style="margin-bottom: 5px;">📞 +62 852-7185-2151</p>
+                <p style="margin-bottom: 15px;">📧 ibs.smpplusdarusshaleh@gmail.com</p>
+                <div class="social-icons">
+                    <a href="https://instagram.com/darusshaleh_official" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://youtube.com/@darusshaleh_official" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://tiktok.com/@darusshaleh_official" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://facebook.com/darusshaleh.darusshaleh.37" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://wa.me/6285271852151" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Yayasan Darusshaleh. All Rights Reserved. Powered by GitHub Pages.</p>
+            <p>© 2026 <strong>SMP Plus & SMA IT Darusshaleh</strong>. All rights reserved.</p>
+            <p style="margin-top: 5px;">Dibangun dengan ❤️ untuk pendidikan Islam — <strong>Generasi Gemilang</strong></p>
         </div>
     </footer>
 
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">×</span>
+        <div class="lightbox-content" id="lightboxContent"></div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        /* ===================================================================
-           LOCAL DATABASE DATA KELULUSAN (Format Key-Value)
-           Anda tinggal menambah baris data siswa baru di bawah ini sesuai format.
-           =================================================================== */
+        // Inisialisasi AOS
+        AOS.init({ duration: 800, once: true, offset: 100 });
+
+        // Mobile Menu
+        function toggleMenu() { document.getElementById('navLinks').classList.toggle('show'); }
+        function closeMenu() { document.getElementById('navLinks').classList.remove('show'); }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+
+        // ===== DUA COUNTDOWN =====
+        const smaTarget = new Date("May 4, 2026 23:00:00").getTime();
+        const smpTarget = new Date("June 2, 2026 23:00:00").getTime();
+        let smaRevealed = false;
+
+        function updateCountdownSMA() {
+            const now = new Date().getTime();
+            const distance = smaTarget - now;
+            const smaBox = document.getElementById('sma-countdown-box');
+
+            if (distance < 0 && !smaRevealed) {
+                smaBox.innerHTML = `
+                    <div style="text-align:center; padding:5px;">
+                        <h4 style="color: var(--kuning-muda); margin-bottom:10px; font-size: 1.1em;">
+                            🎉 Kelulusan SMA IT Telah Diumumkan!
+                        </h4>
+                        <div style="background: rgba(255,255,255,0.1); border-radius: 50px; padding: 5px 10px; margin-bottom: 15px; display: flex; align-items: center;">
+                            <i class="fas fa-music" style="color: var(--kuning-emas); margin: 0 10px;"></i>
+                            <audio controls style="width: 100%; height: 30px;">
+                                <source src="https://drive.google.com/uc?export=download&id=1_96K5dQDyze56vhkSn7UfBx4UZURABQe" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div style="display: flex; gap: 10px; justify-content: center;">
+                            <a href="https://drive.google.com/file/d/1SKgfUrk5uCXUeCWYxoftegAgr6lYR3Fh/view?usp=sharing" target="_blank" style="background:var(--kuning-emas); color:black; padding:6px 12px; border-radius:20px; font-weight:700; text-decoration:none; font-size:12px;">Lihat SK</a>
+                            <a href="https://drive.google.com/file/d/1N0SpWWgpzlPx2WaxG51PS68ja4wTCPh1/view?usp=sharing" target="_blank" style="background:rgba(255,255,255,0.2); color:white; padding:6px 12px; border-radius:20px; font-weight:700; text-decoration:none; font-size:12px;">Foto Lulusan</a>
+                        </div>
+                    </div>
+                `;
+                smaRevealed = true;
+                return;
+            }
+
+            if (smaRevealed) return;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('sma-days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('sma-hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('sma-minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('sma-seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        function updateCountdownSMP() {
+            const now = new Date().getTime();
+            const distance = smpTarget - now;
+
+            if (distance < 0) {
+                document.getElementById('smp-days').textContent = "00";
+                document.getElementById('smp-hours').textContent = "00";
+                document.getElementById('smp-minutes').textContent = "00";
+                document.getElementById('smp-seconds').textContent = "00";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('smp-days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('smp-hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('smp-minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('smp-seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        setInterval(() => { updateCountdownSMA(); updateCountdownSMP(); }, 1000);
+        updateCountdownSMA(); updateCountdownSMP();
+
+        // Tab Profil & Filter Galeri
+        function switchTab(tabName, btn) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function filterGaleri(kategori, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.galeri-item').forEach(item => {
+                item.style.display = (kategori === 'semua' || item.dataset.kategori === kategori) ? 'block' : 'none';
+            });
+        }
+
+        // Lightbox
+        function openLightbox(title) {
+            document.getElementById('lightboxContent').innerHTML = `
+                <h3 style="color: var(--hijau-utama); margin-bottom: 10px;">📸 ${title}</h3>
+                <p style="color: #666;">Foto dokumentasi kegiatan sekolah resmi Darusshaleh.</p>
+            `;
+            document.getElementById('lightbox').classList.add('active');
+        }
+        function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
+        document.getElementById('lightbox').addEventListener('click', function(e) { if (e.target === this) closeLightbox(); });
+
+        // ==============================================================
+        // ===== DATABASE LOKAL & LOGIKA CEK KELULUSAN MANDIRI SISWA =====
+        // ==============================================================
+        // Catatan Admin: Anda dapat menambah, mengubah, atau menghapus data siswa di bawah ini sesuai kebutuhan nyata.
         const databaseKelulusan = {
-            "202601001": {
-                nama: "Ahmad Fauzi",
-                sekolah: "SMA IT Darusshaleh",
+            "0123456789": {
+                nama: "Muhammad Alfatih",
+                jenjang: "SMA IT Darusshaleh (Angkatan 1)",
                 status: "LULUS",
-                linkSK: "https://drive.google.com/uc?export=download&id=ID_FILE_DRIVE_AHMAD"
+                sandi: "drs123",
+                keterangan: "Diterima di Universitas Andalas via jalur prestasi.",
+                linkSK: "https://drive.google.com/file/d/1SKgfUrk5uCXUeCWYxoftegAgr6lYR3Fh/view"
             },
-            "202601002": {
+            "9876543210": {
                 nama: "Siti Aminah",
-                sekolah: "SMA IT Darusshaleh",
+                jenjang: "SMP Plus Darusshaleh",
                 status: "LULUS",
-                linkSK: "https://drive.google.com/uc?export=download&id=ID_FILE_DRIVE_SITI"
-            },
-            "202602001": {
-                nama: "Muhammad Rian",
-                sekolah: "SMP Plus Darusshaleh",
-                status: "LULUS",
-                linkSK: "https://drive.google.com/uc?export=download&id=ID_FILE_DRIVE_RIAN"
+                sandi: "smp456",
+                keterangan: "Lulus Tahfidz dengan predikat Mumtaz (6 Juz).",
+                linkSK: "#"
             }
         };
 
-        // Inisialisasi fungsi saat DOM siap
-        document.addEventListener('DOMContentLoaded', () => {
-            initCountdowns();
-            initActiveLinkHighlight();
-        });
-
-        /* ========== LOGIC: VERIFIKASI NISN & TEMPLATE OUTPUT ========== */
-        function prosesCekKelulusan(event) {
+        function handleCekKelulusan(event) {
             event.preventDefault();
-            const inputNIS = document.getElementById('nisnInput').value.trim();
-            const hasilBox = document.getElementById('hasilKelulusanBox');
             
-            // Evaluasi keberadaan NISN di dalam object database
-            if (databaseKelulusan.hasOwnProperty(inputNISN)) {
-                const siswa = databaseKelulusan[inputNISN];
-                let statusBadge = '';
-                
-                if (siswa.status.toUpperCase() === 'LULUS') {
-                    statusBadge = `<span style="background: #1B8A4A; color: white; padding: 6px 20px; border-radius: 20px; font-weight:700; font-size:13px; display:inline-block; margin-bottom:15px; box-shadow: 0 4px 10px rgba(27,138,74,0.3);">CONGRATULATIONS / LULUS</span>`;
-                } else {
-                    statusBadge = `<span style="background: #D32F2F; color: white; padding: 6px 20px; border-radius: 20px; font-weight:700; font-size:13px; display:inline-block; margin-bottom:15px;">BELUM LULUS</span>`;
-                }
+            const nisn = document.getElementById('inputNISN').value.trim();
+            const sandi = document.getElementById('inputSandi').value.trim();
+            const boxHasil = document.getElementById('boxHasilCek');
+            
+            // Validasi Input Dasar
+            if(nisn.length < 10 || isNaN(nisn)) {
+                boxHasil.style.display = "block";
+                boxHasil.className = "hasil-kelulusan-box status-gagal";
+                boxHasil.innerHTML = `<h4><i class="fas fa-exclamation-triangle"></i> Format Gagal</h4><p style="text-align:center;">Format NISN harus berupa 10 digit angka resmi!</p>`;
+                return;
+            }
 
-                hasilBox.innerHTML = `
-                    <div style="background: white; color: var(--teks-gelap); padding: 35px 30px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); animation: fadeIn 0.4s ease-out; text-align: left; width: 100%;">
-                        ${statusBadge}
-                        <h3 style="font-size: 26px; font-weight: 800; color: var(--hijau-utama); margin-bottom: 5px; line-height:1.2;">${siswa.nama}</h3>
-                        <p style="color: #666; font-size: 14px; margin-bottom: 20px; font-weight: 500;">NIS: ${inputNISN} • ${siswa.sekolah}</p>
-                        <hr style="border: none; border-top: 1px dashed #e2e8f0; margin-bottom: 20px;">
-                        
-                        <p style="font-size: 14px; color: #4a5568; margin-bottom: 25px; line-height: 1.6;">
-                            Selamat atas perjuangan belajar Anda di Yayasan Darusshaleh. Berdasarkan keputusan rapat dewan guru, Anda dinyatakan berhak menerima dokumen kelulusan resmi di bawah ini.
-                        </p>
-                        
-                        <a href="${siswa.linkSK}" target="_blank" class="btn-daftar-besar" style="display: block; text-align: center; font-size: 15px; padding: 14px 20px; text-decoration: none; width: 100%;">
-                            <i class="fas fa-file-download"></i> Unduh SK Kelulusan Resmi (PDF)
-                        </a>
-                    </div>
-                `;
+            const dataSiswa = databaseKelulusan[nisn];
+
+            boxHasil.style.display = "block";
+
+            if (dataSiswa) {
+                // Konfirmasi Sandi Valid
+                if (dataSiswa.sandi === sandi) {
+                    boxHasil.className = "hasil-kelulusan-box status-lulus";
+                    boxHasil.innerHTML = `
+                        <h4><i class="fas fa-graduation-cap"></i> Selamat! Anda Dinyatakan ${dataSiswa.status}</h4>
+                        <table class="hasil-table">
+                            <tr><td>Nama Siswa</td><td>: ${dataSiswa.nama}</td></tr>
+                            <tr><td>NISN</td><td>: ${nisn}</td></tr>
+                            <tr><td>Jenjang Sekolah</td><td>: ${dataSiswa.jenjang}</td></tr>
+                            <tr><td>Catatan Khusus</td><td>: <em>${dataSiswa.keterangan}</em></td></tr>
+                        </table>
+                        <div style="text-align:center; margin-top:20px;">
+                            <a href="${dataSiswa.linkSK}" target="_blank" style="background:var(--kuning-emas); color:black; font-weight:700; padding:10px 25px; border-radius:30px; text-decoration:none; display:inline-block; font-size:14px;"><i class="fas fa-file-download"></i> Unduh SK Kelulusan Pribadi</a>
+                        </div>
+                    `;
+                } else {
+                    // Jika Sandi Salah
+                    boxHasil.className = "hasil-kelulusan-box status-gagal";
+                    boxHasil.innerHTML = `
+                        <h4><i class="fas fa-lock"></i> Akses Ditolak</h4>
+                        <p style="text-align:center;">Sandi Kelulusan yang Anda masukkan salah. Silakan periksa kembali berkas/PIN yang diberikan panitia.</p>
+                    `;
+                }
             } else {
-                // Template error jika data tidak ditemukan
-                hasilBox.innerHTML = `
-                    <div style="background: #FFF3CD; color: #856404; padding: 30px; border-radius: 20px; border: 1px solid #ffeeba; animation: fadeIn 0.3s ease-out; text-align: center; width: 100%;">
-                        <i class="fas fa-exclamation-triangle" style="font-size: 45px; margin-bottom: 12px; color: #e67e22;"></i>
-                        <h4 style="font-weight: 700; font-size:18px; margin-bottom: 8px;">Nomor Induk Tidak Valid</h4>
-                        <p style="font-size: 13px; line-height: 1.6; color: #66521a;">Maaf, data kelulusan untuk NIS <strong>"${inputNIS}"</strong> tidak dapat ditemukan di server lokal. Silakan pastikan nomor kembali atau konfirmasi ke Admin Tata Usaha Madrasah.</p>
-                    </div>
+                // Jika NISN Tidak Terdaftar
+                boxHasil.className = "hasil-kelulusan-box status-gagal";
+                boxHasil.innerHTML = `
+                    <h4><i class="fas fa-user-times"></i> Data Tidak Ditemukan</h4>
+                    <p style="text-align:center;">Siswa dengan NISN <strong>${nisn}</strong> tidak terdaftar dalam basis data kelulusan tahun ini. Silakan hubungi bagian Tata Usaha jika ada kekeliruan.</p>
                 `;
             }
-        }
-
-        /* ========== LOGIC: BANNER NAVIGATION STICKY ========== */
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 40) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        /* ========== LOGIC: RESPONSIVE MOBILE MENU/BARS ========== */
-        const navLinks = document.getElementById('navLinks');
-        function toggleMenu() { navLinks.classList.toggle('show'); }
-        function closeMenu() { navLinks.classList.remove('show'); }
-
-        document.addEventListener('click', (e) => {
-            if (!navbar.contains(e.target) && navLinks.classList.contains('show')) {
-                closeMenu();
-            }
-        });
-
-        /* ========== LOGIC: AUTO AUTOMATION TIMER COUNTDOWN ========== */
-        function initCountdowns() {
-            // Pengaturan tenggat waktu pengumuman
-            const targetSMA = new Date("May 4, 2026 23:00:00").getTime();
-            const targetSMP = new Date("June 15, 2026 16:00:00").getTime();
-
-            function updateTimer() {
-                const now = new Date().getTime();
-
-                // Pemrosesan Trigger Jam SMA
-                const diffSMA = targetSMA - now;
-                if (diffSMA <= 0) {
-                    const smaBox = document.getElementById('sma-countdown-box');
-                    if (smaBox) {
-                        smaBox.innerHTML = `
-                            <h4>🎓 STATUS KELULUSAN SMA IT</h4>
-                            <p style="color: #FFF3CD; font-size: 13px; margin-bottom: 15px; font-weight: 500;"><i class="fas fa-check-circle"></i> Hasil verifikasi kelulusan SMA IT resmi dirilis!</p>
-                            <a href="#kelulusan" class="btn-daftar-besar" style="padding: 8px 20px; font-size: 13px; box-shadow:none;">Cek Sekarang</a>
-                        `;
-                    }
-                } else {
-                    renderTime('sma', diffSMA);
-                }
-
-                // Pemrosesan Trigger Jam SMP
-                const diffSMP = targetSMP - now;
-                if (diffSMP <= 0) {
-                    const smpBox = document.getElementById('smp-countdown-box');
-                    if (smpBox) {
-                        smpBox.innerHTML = `
-                            <h4>🎓 STATUS KELULUSAN SMP PLUS</h4>
-                            <p style="color: #FFF3CD; font-size: 13px; margin-bottom: 15px; font-weight: 500;"><i class="fas fa-check-circle"></i> Pengumuman kelulusan siswa SMP resmi dibuka!</p>
-                            <a href="#kelulusan" class="btn-daftar-besar" style="padding: 8px 20px; font-size: 13px; box-shadow:none;">Cek Sekarang</a>
-                        `;
-                    }
-                } else {
-                    renderTime('smp', diffSMP);
-                }
-            }
-
-            function renderTime(prefix, diff) {
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-                const dEl = document.getElementById(`${prefix}-days`);
-                const hEl = document.getElementById(`${prefix}-hours`);
-                const mEl = document.getElementById(`${prefix}-minutes`);
-                const sEl = document.getElementById(`${prefix}-seconds`);
-
-                if(dEl && hEl && mEl && sEl) {
-                    dEl.innerText = String(days).padStart(2, '0');
-                    hEl.innerText = String(hours).padStart(2, '0');
-                    mEl.innerText = String(minutes).padStart(2, '0');
-                    sEl.innerText = String(seconds).padStart(2, '0');
-                }
-            }
-
-            updateTimer();
-            setInterval(updateTimer, 1000);
-        }
-
-        /* ========== LOGIC: INTERAKTIF FILTER GALERI ========== */
-        function filterGallery(category) {
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => {
-                btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${category}'`));
-            });
-
-            const items = document.querySelectorAll('.galeri-item');
-            items.forEach(item => {
-                if (category === 'all' || item.getAttribute('data-category') === category) {
-                    item.style.display = 'block';
-                    item.style.opacity = '0';
-                    setTimeout(() => item.style.opacity = '1', 40);
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-
-        /* ========== LOGIC: SCROLL ACTIVE TARGET LINK HIGH LIGHTER ========== */
-        function initActiveLinkHighlight() {
-            const sections = document.querySelectorAll('section, header');
-            const navAnchorLinks = document.querySelectorAll('.nav-links a:not(.btn-daftar-nav)');
-
-            window.addEventListener('scroll', () => {
-                let currentSectionId = '';
-                sections.forEach(section => {
-                    if (window.scrollY >= (section.offsetTop - 150)) {
-                        currentSectionId = section.getAttribute('id');
-                    }
-                });
-                navAnchorLinks.forEach(link => {
-                    const match = link.getAttribute('href') === `#${currentSectionId}`;
-                    link.style.background = match ? 'var(--kuning-muda)' : '';
-                    link.style.color = match ? 'var(--hijau-utama)' : '';
-                });
-            });
         }
     </script>
+
 </body>
 </html>
